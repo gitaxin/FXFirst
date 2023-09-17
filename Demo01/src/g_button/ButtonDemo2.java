@@ -40,6 +40,7 @@ public class ButtonDemo2 extends Application {
         });
 
 
+
         //事件助手，可做多击事件处理，可过滤鼠标左键还是右键
         btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
