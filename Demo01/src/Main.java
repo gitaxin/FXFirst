@@ -1,3 +1,4 @@
+import h_widget.HyperlinkDemo;
 import j_scheduled.ScheduledDemo;
 import javafx.application.Application;
 
@@ -10,6 +11,6 @@ import javafx.application.Application;
  */
 public class Main {
     public static void main(String[] args) {
-        Application.launch(ScheduledDemo.class,args);
+        Application.launch(HyperlinkDemo.class,args);
     }
 }

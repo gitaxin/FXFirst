@@ -168,7 +168,8 @@ public class LoginWin extends Application {
             }else{
                 System.out.println("登录失败！");
 
-                //动画
+                ///动画
+                //登录窗口闪一下
                 FadeTransition fade = new FadeTransition();
                 fade.setDuration(Duration.millis(80));
                 fade.setNode(root);
