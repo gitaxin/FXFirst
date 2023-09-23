@@ -3,8 +3,10 @@ package h_widget;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -12,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.Mnemonic;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -35,7 +38,11 @@ public class MenuBarDemo extends Application {
 
         Menu m_file = new Menu("文件");
 
-        Menu m_edit = new Menu("编辑",new ImageView("love.png"));
+        ImageView imageView = new ImageView("edit.png");
+        imageView.setFitWidth(16);
+        imageView.setFitHeight(16);
+
+        Menu m_edit = new Menu("编辑",imageView);
 
         Menu m_view = new Menu("查看");
 
@@ -59,7 +66,7 @@ public class MenuBarDemo extends Application {
 
 
         //设置带图标的菜单
-        MenuItem item_print = new MenuItem("打印",new ImageView("love.png"));
+        MenuItem item_print = new MenuItem("打印",new ImageView("print.png"));
         item_print.setAccelerator(KeyCombination.valueOf("ctrl+shift+p"));
 
         MenuItem item_exit = new MenuItem("退出");
@@ -98,6 +105,23 @@ public class MenuBarDemo extends Application {
         m_tool.getItems().addAll(checkItemRun,checkItemMin);
 
 
+        //自定义菜单项
+        CustomMenuItem customMenuItem1 = new CustomMenuItem();
+        Button button = new Button("关于");
+        customMenuItem1.setContent(button);
+
+        CustomMenuItem customMenuItem2 = new CustomMenuItem();
+        HBox hBox = new HBox();
+        hBox.getChildren().addAll(new Button("btn1"),new Button("btn2"),new Button("btn3"));
+        customMenuItem2.setContent(hBox);
+
+        CustomMenuItem customMenuItem3 = new CustomMenuItem();
+        ProgressBar progressBar = new ProgressBar(0.4);
+        customMenuItem3.setContent(progressBar);
+
+        m_help.getItems().addAll(customMenuItem1,customMenuItem2,customMenuItem3);
+
+
         //ObservableList<Toggle> toggles = tg.getToggles();
         //for (Toggle toggle : toggles) {
         //    RadioMenuItem radio = (RadioMenuItem)toggle;
@@ -115,12 +139,21 @@ public class MenuBarDemo extends Application {
             for (MenuItem item : menu.getItems()) {
                 item.setOnAction(event -> {
                     Object eventSource = event.getSource();
-                    if(eventSource instanceof RadioMenuItem){
-                        RadioMenuItem source = (RadioMenuItem)eventSource;
+                    if(eventSource instanceof RadioMenuItem source){
                         System.out.println("RadioMenuItem = " + source.getText() + ", isSelected = " + source.isSelected());
-                    }else if (eventSource instanceof CheckMenuItem){
-                        CheckMenuItem source = (CheckMenuItem)eventSource;
+                    }else if (eventSource instanceof CheckMenuItem source){
                         System.out.println("CheckMenuItem = " + source.getText() + ", isSelected = " + source.isSelected());
+                    }else if (eventSource instanceof CustomMenuItem source){
+                        Node node = source.getContent();
+                        if(node instanceof Button btn2){
+                            System.out.println("CustomMenuItem-Button = " + btn2.getText());
+                        }else if(node instanceof ProgressBar prog){
+                            System.out.println("CustomMenuItem-ProgressBar Progress = " + prog.getProgress());
+                        }else if(node instanceof HBox hbox){
+                            for (Node child : hbox.getChildren()) {
+                                System.out.println("CustomMenuItem-HBox = " + ((Button)child).getText());
+                            }
+                        }
                     }else{
                         MenuItem source = (MenuItem)eventSource;
                         System.out.println("MenuItem = " + source.getText());
