@@ -14,6 +14,6 @@ import javafx.application.Application;
  */
 public class Main {
     public static void main(String[] args) {
-        Application.launch(ButtonDemo2.class,args);
+        Application.launch(TabPaneDemo.class,args);
     }
 }
