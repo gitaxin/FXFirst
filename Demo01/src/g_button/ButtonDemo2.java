@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
@@ -25,10 +26,10 @@ public class ButtonDemo2 extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        Button btn = new Button("鼠标事件演示");
+        Button btn = new Button("鼠标事件演示",new ImageView("search.png"));
         btn.setLayoutX(100);
         btn.setLayoutY(100);
-        btn.setPrefWidth(100);
+        btn.setPrefWidth(200);
         btn.setPrefHeight(100);
 
         //单击

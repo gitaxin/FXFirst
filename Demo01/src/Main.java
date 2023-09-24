@@ -1,8 +1,7 @@
+import g_button.ButtonDemo;
+import g_button.ButtonDemo2;
 import g_button.KeyCombinationDemo;
-import h_widget.ContextMenuDemo;
-import h_widget.HyperlinkDemo;
-import h_widget.MenuBarDemo;
-import h_widget.MenuButtonDemo;
+import h_widget.*;
 import j_scheduled.ScheduledDemo;
 import javafx.application.Application;
 
@@ -15,6 +14,6 @@ import javafx.application.Application;
  */
 public class Main {
     public static void main(String[] args) {
-        Application.launch(ContextMenuDemo.class,args);
+        Application.launch(ButtonDemo2.class,args);
     }
 }
