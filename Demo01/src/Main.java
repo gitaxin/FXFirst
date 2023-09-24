@@ -12,6 +12,6 @@ import javafx.application.Application;
  */
 public class Main {
     public static void main(String[] args) {
-        Application.launch(ButtonBarDemo.class,args);
+        Application.launch(ChoiceBoxObjectDemo2.class,args);
     }
 }
