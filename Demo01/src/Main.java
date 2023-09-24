@@ -1,6 +1,4 @@
-import g_button.ButtonDemo;
-import g_button.ButtonDemo2;
-import g_button.KeyCombinationDemo;
+import g_button.*;
 import h_widget.*;
 import j_scheduled.ScheduledDemo;
 import javafx.application.Application;
@@ -14,6 +12,6 @@ import javafx.application.Application;
  */
 public class Main {
     public static void main(String[] args) {
-        Application.launch(TabPaneDemo.class,args);
+        Application.launch(CheckboxDemo.class,args);
     }
 }
