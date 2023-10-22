@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 /**
  * ChoiceBoxDemo class
  * 下拉列表
+ * 少量选项建议使用
  *
  * @author axin
  * @date 2023/9/24
