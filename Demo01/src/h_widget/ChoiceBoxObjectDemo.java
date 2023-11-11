@@ -55,6 +55,8 @@ public class ChoiceBoxObjectDemo extends Application {
 
         boolean b = choice.getItems().addAll(cities);
 
+
+
         root.getChildren().addAll(choice);
 
         AnchorPane.setTopAnchor(choice,10.0);

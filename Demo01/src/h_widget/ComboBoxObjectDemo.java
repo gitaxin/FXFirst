@@ -18,8 +18,8 @@ import java.util.List;
 
 /**
  * ComboBoxDemo class
- * 对象类型的下拉值
- * 修改对象数据内部属性的值
+ * 1.对象类型的下拉值
+ * 2.ComboBox为自定义对象类型下拉选时，动态更新下拉对象属性的值
  *
  * @author axin
  * @date 2023/10/22
