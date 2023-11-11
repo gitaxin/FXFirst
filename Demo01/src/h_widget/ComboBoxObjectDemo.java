@@ -19,6 +19,7 @@ import java.util.List;
 /**
  * ComboBoxDemo class
  * 对象类型的下拉值
+ * 修改对象数据内部属性的值
  *
  * @author axin
  * @date 2023/10/22
@@ -43,7 +44,7 @@ public class ComboBoxObjectDemo extends Application {
         //combo.setValue(new City());
 
         //与choice的区别，可编辑
-        combo.setEditable(true);
+        combo.setEditable(false);
 
         combo.setPromptText("请输入关键字");
         //当无下拉数据时，展示一个默认的提示语
@@ -65,24 +66,33 @@ public class ComboBoxObjectDemo extends Application {
 
             /**
              * 接收用户输入的值
+             * 失去焦点时，用户在combo中输入了数据，就算是没有输入也会调用此方法
              * @param string
              * @return
              */
             @Override
             public City fromString(String string) {
                 System.out.println(string);
-                return new City("0",string);
+                if(string.trim().length() > 0){
+                    return new City("0",string);
+                }
+                return null;
             }
         });
 
+        //演示失去焦点时，获取用户在combo中输入的数据
         Button button = new Button("让combo失去焦点");
-        root.getChildren().addAll(combo,button);
+        Button btnUpdate = new Button("修改下拉选对象的值（当combo可编辑时会存在冲突，测试该功能时请将combo的Editable属性设置为false）");
+        root.getChildren().addAll(combo,button,btnUpdate);
 
         AnchorPane.setLeftAnchor(combo, 50.0);
         AnchorPane.setTopAnchor(combo,100.0);
 
         AnchorPane.setLeftAnchor(button, 250.0);
         AnchorPane.setTopAnchor(button,100.0);
+
+        AnchorPane.setLeftAnchor(btnUpdate, 450.0);
+        AnchorPane.setTopAnchor(btnUpdate,100.0);
 
         combo.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<City>() {
             @Override
@@ -91,6 +101,23 @@ public class ComboBoxObjectDemo extends Application {
             }
         });
 
+        btnUpdate.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                int selectedIndex = combo.getSelectionModel().getSelectedIndex();
+                System.out.println("selectedIndex:" + selectedIndex);
+                if(selectedIndex >= 0){
+                    combo.getItems().get(selectedIndex).setName("我被修改了");
+                    //清空已选择的，再重新选择一下，就会更新修改的属性
+                    combo.getSelectionModel().clearSelection();
+                    combo.getSelectionModel().select(selectedIndex);
+                }
+
+
+
+
+            }
+        });
 
 
 
