@@ -3,13 +3,15 @@ package h_widget;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 import java.util.ArrayList;
@@ -17,14 +19,12 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+
 /**
- * ComboBoxObjectDemo2 class
- * 对象类型的下拉值-模糊搜索
- *
- * @author axin
- * @date 2023/10/22
+ * ComboBoxObjectDemo3 class
+ * 对象类型下拉选，自定义下拉选项样式
  */
-public class ComboBoxObjectDemo2 extends Application {
+public class ComboBoxObjectDemo3 extends Application {
 
 
     @Override
@@ -39,20 +39,6 @@ public class ComboBoxObjectDemo2 extends Application {
         combo.getItems().addAll(cities);
         combo.setPrefWidth(150);
 
-        //combo.setVisibleRowCount(3);
-
-        //combo.setValue(new City());
-
-        //与choice的区别，可编辑
-        combo.setEditable(true);
-
-        combo.setPromptText("请输入关键字");
-        //当无下拉数据时，展示一个默认的提示语
-        combo.setPlaceholder(new Label("无选项"));
-
-        //获取combo的文本框对象，对值变化进行监听
-        TextField textField = combo.editorProperty().get();
-
 
 
         //转换下拉选展示的值
@@ -62,6 +48,7 @@ public class ComboBoxObjectDemo2 extends Application {
                 if(object != null){
                     //转称City对象，将对象的属性设置为下拉选列表
                     return object.getId() + " - " + object.getName();
+
                 }
                 return null;
             }
@@ -79,39 +66,76 @@ public class ComboBoxObjectDemo2 extends Application {
         });
 
 
+        combo.setCellFactory(new Callback<ListView<City>, ListCell<City>>() {
+
+            /**
+             * 此方法与setConverter无关系
+             * @param param
+             * @return
+             */
+            @Override
+            public ListCell<City> call(ListView<City> param) {
+                ListCell<City> cell = new ListCell<>(){
+                    @Override
+                    protected void updateItem(City item, boolean empty) {
+                        //调用super不能删掉，上面是有自己的实现的
+                        super.updateItem(item, empty);
+                        if(!empty){
+                            /**
+                             * javaFx内部可能是如此实现的：获取setConverter设置的Converter,然后调用其toString方法，将对象类型转换为字符串
+                             *  如果要想重写下拉项的样式，则重写下拉项的布局
+                             */
+                            //String string = combo.getConverter().toString(item);
+                            //this.setGraphic(new Label(string));
+                            //如果只是文本，可以使用setText
+                            //this.setText(string);
+
+                            //自定义下拉项布局
+                            HBox hBox = new HBox();
+
+
+
+                            VBox vBox1 = new VBox();
+                            vBox1.setAlignment(Pos.CENTER);
+                            ImageView imageView = new ImageView("list.png");
+                            vBox1.getChildren().add(imageView);
+
+
+
+
+                            VBox vBox = new VBox();
+                            vBox.getChildren().add(new Label(item.getId()));
+                            vBox.getChildren().add(new Label(item.getName()));
+                            if(item.getDesc() != null && item.getDesc().trim().length() != 0){
+                                vBox.getChildren().add(new Label(item.getDesc()));
+                            }
+                            hBox.getChildren().addAll(vBox1,vBox);
+                            this.setGraphic(hBox);
+                        }
+
+                    }
+                };
+
+                return cell;
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
         root.getChildren().addAll(combo);
 
         AnchorPane.setLeftAnchor(combo, 50.0);
         AnchorPane.setTopAnchor(combo,100.0);
 
 
-        textField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-
-                if(newValue.trim().length() == 0){
-                    combo.getItems().clear();
-                    combo.getItems().addAll(cities);
-                    combo.show();
-                    return;
-                }
-                List<City> newList = cities.stream().filter(new Predicate<City>() {
-                    @Override
-                    public boolean test(City city) {
-                        return city.getName().contains(newValue);
-
-                    }
-                }).collect(Collectors.toList());
-
-                if(newList.isEmpty()){
-                    combo.getItems().clear();
-                    combo.show();
-                    return;
-                }
-                combo.getItems().addAll(newList);
-
-            }
-        });
 
 
         Scene scene = new Scene(root);
