@@ -12,6 +12,6 @@ import javafx.application.Application;
  */
 public class Main {
     public static void main(String[] args) {
-        Application.launch(ChoiceBoxObjectDemo3.class,args);
+        Application.launch(DatePicterDemo.class,args);
     }
 }
