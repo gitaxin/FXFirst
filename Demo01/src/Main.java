@@ -1,5 +1,6 @@
 import g_button.*;
 import h_widget.*;
+import i_layout.SplitPaneDemo;
 import j_scheduled.ScheduledDemo;
 import javafx.application.Application;
 
@@ -12,6 +13,6 @@ import javafx.application.Application;
  */
 public class Main {
     public static void main(String[] args) {
-        Application.launch(ProgressBarDemo.class,args);
+        Application.launch(SplitPaneDemo.class,args);
     }
 }
