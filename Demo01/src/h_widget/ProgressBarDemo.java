@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
@@ -13,6 +14,8 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.text.DecimalFormat;
 
 /**
  * ProgressBarDemo class
@@ -27,16 +30,29 @@ public class ProgressBarDemo extends Application {
     public void start(Stage primaryStage) {
 
         VBox root = new VBox();
-        root.setPadding(new Insets(100));
+        root.setAlignment(Pos.CENTER);
+        //root.setPadding(new Insets(100));
+
+        ProgressIndicator pi = new ProgressIndicator(0.3);
+        //pi.setPrefWidth(100);
+        //pi.setPrefHeight(100);
+        pi.setMinWidth(200);
+        pi.setMinHeight(200);
+        //pi.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
 
         ProgressBar progressBar = new ProgressBar(0.3);
-        progressBar.setProgress(0.5);
-
         progressBar.setPrefWidth(300);
         progressBar.setPrefHeight(30);
-
         //无限进度样式
         //progressBar.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
+
+
+        progressBar.progressProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                System.out.println("progress changed: " + newValue);
+            }
+        });
 
         //使用多任务更新slider值
         ProgressBarTask myTask = new ProgressBarTask(progressBar);
@@ -49,13 +65,15 @@ public class ProgressBarDemo extends Application {
             public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
                 if(newValue != null){
                     System.out.println("value is changed: " + newValue);
+                    pi.setProgress(newValue);
                     progressBar.setProgress(newValue);
+
                 }
             }
         });
 
 
-        root.getChildren().addAll(progressBar);
+        root.getChildren().addAll(pi,progressBar);
 
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
@@ -68,6 +86,7 @@ public class ProgressBarDemo extends Application {
 
     class ProgressBarTask extends ScheduledService<Double>{
 
+        private DecimalFormat df = new DecimalFormat("0.00");
         private ProgressBar pb;
 
         public ProgressBarTask(ProgressBar pb) {
@@ -85,7 +104,9 @@ public class ProgressBarDemo extends Application {
                     if(progress > 1){
                         progress = 0;
                     }
-                    return progress;
+                    String format = df.format(progress);
+                    return Double.parseDouble(format);
+
                 }
             };
 

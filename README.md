@@ -9,6 +9,10 @@ JavaFX 学习Demo
   Demo01/src/h_widget/DatePicterDemo.java
 - 分页选择器
   Demo01/src/h_widget/PaginationDemo.java
+- 滑块
+  Demo01/src/h_widget/SliderDemo.java
+- 进度条
+  Demo01/src/h_widget/ProgressBarDemo.java
 
 
 
